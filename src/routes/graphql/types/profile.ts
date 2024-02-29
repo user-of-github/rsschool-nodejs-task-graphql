@@ -1,4 +1,4 @@
-import { GraphQLBoolean, GraphQLInt, GraphQLInterfaceType, GraphQLNonNull, GraphQLString } from 'graphql/type';
+import { GraphQLBoolean, GraphQLInt, GraphQLInterfaceType, GraphQLNonNull } from 'graphql/type';
 import { UUIDType } from './uuid.js';
 
 export const ProfileType = new GraphQLInterfaceType({
