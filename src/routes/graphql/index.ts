@@ -2,11 +2,10 @@ import { FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox';
 import {graphql} from 'graphql';
 import { createGqlResponseSchema, gqlResponseSchema } from './schemas.js';
 import {UUIDType} from './types/uuid.js';
-import { createSchema } from './types/schema.js';
+import { Schema } from './types/schema.js';
 
 const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
   const { prisma } = fastify;
-  const schema = createSchema(prisma);
 
   fastify.route({
     url: '/',
@@ -24,8 +23,9 @@ const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
 
       const result = await graphql({
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        schema: schema,
-        source: body.query
+        schema: Schema,
+        source: body.query,
+        contextValue: prisma
       });
 
       console.log(result);
