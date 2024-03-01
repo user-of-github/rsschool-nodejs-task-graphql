@@ -1,7 +1,7 @@
-import { GraphQLFloat, GraphQLInt, GraphQLInterfaceType, GraphQLNonNull } from 'graphql';
+import { GraphQLFloat, GraphQLInt, GraphQLNonNull, GraphQLObjectType } from 'graphql';
 import { UUIDType } from './uuid.js';
 
-export const MemberType = new GraphQLInterfaceType({
+export const MemberType = new GraphQLObjectType({
   name: 'MemberType',
   description: 'Member type',
   fields: () => ({
