@@ -1,6 +1,3 @@
 import { GraphQLObjectType } from 'graphql';
 
-export const QueryType = new GraphQLObjectType({
-  name: 'Query',
-  fields: () => ({})
-});
+// https://www.prisma.io/blog/how-to-wrap-a-rest-api-with-graphql-8bf3fb17547d
