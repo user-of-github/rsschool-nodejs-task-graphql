@@ -1,7 +1,7 @@
-import { GraphQLFloat, GraphQLInterfaceType, GraphQLNonNull, GraphQLString } from 'graphql/type';
+import { GraphQLFloat, GraphQLInterfaceType, GraphQLNonNull, GraphQLString } from 'graphql';
 import { UUIDType } from './uuid.js';
 
-export const UserType: GraphQLInterfaceType = new GraphQLInterfaceType({
+const UserType: GraphQLInterfaceType = new GraphQLInterfaceType({
   name: 'User',
   description: 'User',
   fields: () => ({
@@ -19,3 +19,4 @@ export const UserType: GraphQLInterfaceType = new GraphQLInterfaceType({
     }
   })
 });
+export default UserType;

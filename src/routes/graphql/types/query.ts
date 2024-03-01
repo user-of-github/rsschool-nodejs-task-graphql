@@ -1,4 +1,4 @@
-import { GraphQLObjectType } from 'graphql/type';
+import { GraphQLObjectType } from 'graphql';
 
 export const QueryType = new GraphQLObjectType({
   name: 'Query',

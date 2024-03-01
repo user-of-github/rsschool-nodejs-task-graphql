@@ -1,8 +1,8 @@
-import { GraphQLInterfaceType, GraphQLNonNull, GraphQLString } from 'graphql/type';
+import { GraphQLInterfaceType, GraphQLNonNull, GraphQLString } from 'graphql';
 import { UUIDType } from './uuid.js';
 
 export const PostType = new GraphQLInterfaceType({
-  name: 'Post type',
+  name: 'Post',
   description: 'Post type',
   fields: () => ({
     id: {
