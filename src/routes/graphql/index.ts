@@ -25,7 +25,8 @@ const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         schema: Schema,
         source: body.query,
-        contextValue: prisma
+        contextValue: prisma,
+        variableValues: body.variables,
       });
 
       console.log(result);

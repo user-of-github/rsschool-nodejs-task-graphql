@@ -2,6 +2,8 @@ import { PrismaClient } from '@prisma/client';
 import { UUIDType } from './uuid.js';
 import { GraphQLFloat, GraphQLList, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
 import { ProfileType } from './profile.js';
+import { PostType } from './post.js';
+
 
 const UserType: GraphQLObjectType = new GraphQLObjectType({
   name: 'User',
@@ -9,15 +11,12 @@ const UserType: GraphQLObjectType = new GraphQLObjectType({
   fields: () => ({
     id: {
       type: new GraphQLNonNull(UUIDType),
-      description: 'The id of the user.',
     },
     name: {
       type: new GraphQLNonNull(GraphQLString),
-      description: 'The name of the user.',
     },
     balance: {
-      type: new GraphQLNonNull(GraphQLFloat),
-      description: 'The balance of the user'
+      type: new GraphQLNonNull(GraphQLFloat), // TODO: ATTENTION ! Int ??
     },
      profile: {
        type: ProfileType,
@@ -28,18 +27,40 @@ const UserType: GraphQLObjectType = new GraphQLObjectType({
          }
        })
      },
-    // subscribedToUser: {
-    //   type: new GraphQLList(UserType),
-    //   resolve: async (user, _, context: PrismaClient) => await context.user.findMany({
-    //     where: {
-    //       userSubscribedTo: {
-    //         some: {
-    //           authorId: req.params.userId,
-    //         },
-    //       },
-    //     },
-    //   })
-    // }
+    posts: {
+      type: new GraphQLList(PostType),
+      resolve: async (user: { id: string }, _, context: PrismaClient) => await context.post.findMany({
+          where: {
+            authorId: user.id,
+          },
+        })
+    },
+    userSubscribedTo: {
+      type: new GraphQLList(UserType),
+      resolve: async (user, __, prisma) => await prisma.user.findMany({
+        where: {
+          subscribedToUser: {
+            some: {
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
+              subscriberId: user.id,
+            },
+          },
+        },
+      })
+    },
+    subscribedToUser: {
+      type: new GraphQLList(UserType),
+      resolve: async (user, __, prisma) => await prisma.user.findMany({
+        where: {
+          userSubscribedTo: {
+            some: {
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
+              authorId: user.id,
+            },
+          },
+        },
+      })
+    }
   })
 });
 export default UserType;

@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client'
-import { GraphQLBoolean, GraphQLList, GraphQLSchema, GraphQLObjectType, GraphQLNonNull, GraphQLString } from 'graphql';
-import { MemberType } from './member.js';
+import { GraphQLBoolean, GraphQLList, GraphQLSchema, GraphQLObjectType, GraphQLNonNull } from 'graphql';
+import { MemberType, MemberTypeId } from './member.js';
 import { ProfileType } from './profile.js';
 import { PostType } from './post.js';
 import UserType from './user.js';
@@ -17,7 +17,7 @@ export const rootQuery = new GraphQLObjectType({
       type: MemberType,
       args: {
         id: {
-          type: new GraphQLNonNull(GraphQLString)
+          type: new GraphQLNonNull(MemberTypeId)
         }
       },
       resolve: async (_, args, prismaClient: PrismaClient) => await prismaClient.memberType.findUnique({

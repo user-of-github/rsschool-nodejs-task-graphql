@@ -1,21 +1,24 @@
-import { GraphQLFloat, GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
-import { UUIDType } from './uuid.js';
+import { GraphQLEnumType, GraphQLFloat, GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
+
+export const MemberTypeId = new GraphQLEnumType({
+  name: 'MemberTypeId',
+  values: {
+    basic: { value: 'basic'},
+    business: { value: 'business' }
+  }
+});
 
 export const MemberType = new GraphQLObjectType({
   name: 'MemberType',
-  description: 'Member type',
   fields: () => ({
     id: {
-      type: new GraphQLNonNull(GraphQLString),
-      description: 'Id'
+      type: new GraphQLNonNull(MemberTypeId)
     },
     discount: {
-      type: new GraphQLNonNull(GraphQLFloat),
-      description: 'Discount'
+      type: new GraphQLNonNull(GraphQLFloat)
     },
     postsLimitPerMonth: {
-      type: new GraphQLNonNull(GraphQLInt),
-      description: 'Posts limit per month'
+      type: new GraphQLNonNull(GraphQLInt)
     }
   })
 });
