@@ -18,9 +18,15 @@ import { ProfileType } from './profile.js';
 const CreatePostInputType = new GraphQLInputObjectType({
   name: 'CreatePostInput',
   fields: {
-    title: { type: new GraphQLNonNull(GraphQLString) },
-    content: { type: new GraphQLNonNull(GraphQLString) },
-    authorId: { type: new GraphQLNonNull(UUIDType) },
+    title: {
+      type: new GraphQLNonNull(GraphQLString)
+    },
+    content: {
+      type: new GraphQLNonNull(GraphQLString)
+    },
+    authorId: {
+      type: new GraphQLNonNull(UUIDType)
+    }
   }
 });
 
@@ -32,7 +38,7 @@ const CreateUserInputType = new GraphQLInputObjectType({
     },
     balance: {
       type: GraphQLFloat
-    },
+    }
   }
 });
 
@@ -295,9 +301,9 @@ export const rootMutation = new GraphQLObjectType({
                  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
                  subscriberId: args.userId,
                  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
-                 authorId: args.authorId,
+                 authorId: args.authorId
                }
-             },
+             }
            });
 
            return true;

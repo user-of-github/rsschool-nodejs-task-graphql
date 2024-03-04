@@ -10,13 +10,13 @@ const UserType: GraphQLObjectType = new GraphQLObjectType({
   description: 'User',
   fields: () => ({
     id: {
-      type: new GraphQLNonNull(UUIDType),
+      type: new GraphQLNonNull(UUIDType)
     },
     name: {
-      type: new GraphQLNonNull(GraphQLString),
+      type: new GraphQLNonNull(GraphQLString)
     },
     balance: {
-      type: new GraphQLNonNull(GraphQLFloat), // TODO: ATTENTION ! Int ??
+      type: new GraphQLNonNull(GraphQLFloat)
     },
      profile: {
        type: ProfileType,
@@ -31,8 +31,8 @@ const UserType: GraphQLObjectType = new GraphQLObjectType({
       type: new GraphQLList(PostType),
       resolve: async (user: { id: string }, _, context: PrismaClient) => await context.post.findMany({
           where: {
-            authorId: user.id,
-          },
+            authorId: user.id
+          }
         })
     },
     userSubscribedTo: {
@@ -43,9 +43,9 @@ const UserType: GraphQLObjectType = new GraphQLObjectType({
             some: {
               // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
               subscriberId: user.id,
-            },
-          },
-        },
+            }
+          }
+        }
       })
     },
     subscribedToUser: {
@@ -55,10 +55,10 @@ const UserType: GraphQLObjectType = new GraphQLObjectType({
           userSubscribedTo: {
             some: {
               // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
-              authorId: user.id,
-            },
-          },
-        },
+              authorId: user.id
+            }
+          }
+        }
       })
     }
   })

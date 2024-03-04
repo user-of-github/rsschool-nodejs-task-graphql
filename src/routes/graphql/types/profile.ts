@@ -28,8 +28,8 @@ export const ProfileType = new GraphQLObjectType({
       resolve: async (member, _, prisma: PrismaClient) => await prisma.memberType.findUnique({
         where: {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
-          id: member.memberTypeId,
-        },
+          id: member.memberTypeId
+        }
       })
     }
   })

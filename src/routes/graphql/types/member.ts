@@ -3,8 +3,12 @@ import { GraphQLEnumType, GraphQLFloat, GraphQLInt, GraphQLNonNull, GraphQLObjec
 export const MemberTypeId = new GraphQLEnumType({
   name: 'MemberTypeId',
   values: {
-    basic: { value: 'basic'},
-    business: { value: 'business' }
+    basic: {
+      value: 'basic'
+    },
+    business: {
+      value: 'business'
+    }
   }
 });
 

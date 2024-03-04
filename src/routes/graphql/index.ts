@@ -28,14 +28,11 @@ const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
         };
       }
 
-
       return await graphql({
         schema: Schema,
         source: body.query,
         contextValue: prisma,
-        variableValues: body.variables,
-        // @ts-ignore
-        validationRules: [depthLimit(1)]
+        variableValues: body.variables
       });
     }
   });
