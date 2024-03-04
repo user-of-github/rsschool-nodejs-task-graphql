@@ -1,8 +1,8 @@
-import { FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox';
-import {graphql} from 'graphql';
-import { createGqlResponseSchema, gqlResponseSchema } from './schemas.js';
-import {UUIDType} from './types/uuid.js';
-import { Schema } from './types/schema.js';
+import {FastifyPluginAsyncTypebox} from '@fastify/type-provider-typebox';
+import {graphql, parse, Source, validate} from 'graphql';
+import depthLimit from 'graphql-depth-limit'
+import {createGqlResponseSchema, gqlResponseSchema} from './schemas.js';
+import {Schema} from './types/schema.js';
 
 const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
   const { prisma } = fastify;
@@ -19,20 +19,25 @@ const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
     async handler(req) {
       const body = req.body;
 
-      console.log(UUIDType)
+      const validationResult = validate(Schema, parse(new Source(body.query)), [depthLimit(5)]);
 
-      const result = await graphql({
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      if (validationResult.length) {
+        return {
+          data: null,
+          errors: validationResult
+        };
+      }
+
+
+      return await graphql({
         schema: Schema,
         source: body.query,
         contextValue: prisma,
         variableValues: body.variables,
+        // @ts-ignore
+        validationRules: [depthLimit(1)]
       });
-
-      console.log(result);
-
-      return result;
-    },
+    }
   });
 };
 
